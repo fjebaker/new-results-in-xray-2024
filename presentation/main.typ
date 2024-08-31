@@ -1,7 +1,7 @@
 #import "@preview/polylux:0.3.1": *
 #import "tamburlaine.typ": *
 
-#let HANDOUT_MODE = false
+#let HANDOUT_MODE = true
 #enable-handout-mode(HANDOUT_MODE)
 
 #show: tamburlaine-theme.with(aspect-ratio: "4-3")
@@ -47,55 +47,115 @@
 #slide(title: "A black hole and its crown")[
   Introduce the main players: the central singularity, the accretion disc, and the corona
   - some figure illustrating the various corona models
+
+  Cannot directly observe these systems apart from in 2 cases
 ]
 
 #slide(title: "An illustrative corona")[
   // Use an illustration of the corona to delineate all of the key trajectories (continuum, reflection, etc)
-
+  #set text(size: 18pt)
+  #v(1em)
   #grid(
-    columns: (58%, 1fr),
-    align(horizon, align(center)[
-      #v(2em)
-      #animsvg(
-        read("./figs/lamp-post.traces.svg"),
-        (i, im) => only(i)[
-          #image.decode(im, width: 100%)
-        ],
-        (hide:
-          ("g238", "g239", "g241", "g240",
-           // continuum
-           "g251",
-           // reflected
-           "g255", "g260",
-           // returning
-           "g249", "g259",
-           // reprocessed
-           "g250", "g256",
-           // continuum
-           "g248", "g261",
-           // eye
-           "g237",
+    columns: (54%, 1fr),
+    [
+        #place(
+          top + left,
+          [
+            1. The corona *illuminates* the accretion disc
+            2. Illumination gives rise to an *emissivity profile*
+            3. *Reflected emission* depends on the *geometry* of the corona
+          ]
+        )
+        #align(horizon, align(center)[
+        #animsvg(
+          read("./figs/lamp-post.traces.svg"),
+          (i, im) => only(i)[
+            #image.decode(im, width: 100%)
+          ],
+          (hide:
+            ("g238", "g239", "g241", "g240",
+             // continuum
+             "g251",
+             // reflected
+             "g255", "g260",
+             // returning
+             "g249", "g259",
+             // reprocessed
+             "g250", "g256",
+             // continuum
+             "g248", "g261",
+             // eye
+             "g237",
+            ),
           ),
-        ),
-        (display: ("g238", "g239", "g241", "g240", "g256")),
-        (hide: ("g240", "g238")),
-        (hide: ("g241", "g239")),
-        (display: ("g250", "g249")),
-        (hide: ("g250",), display: ("g259",)),
-        (display: ("g237", "g255", "g260")),
-        (display: ("g248", "g261")),
-        handout: HANDOUT_MODE,
-      )
-    ]),
-    [Hello World]
+          (display: ("g238", "g239", "g241", "g240", "g256")),
+          (hide: ("g240", "g238")),
+          (hide: ("g241", "g239")),
+          (display: ("g250", "g249")),
+          (hide: ("g250",), display: ("g259",)),
+          (display: ("g237", "g255", "g260")),
+          (display: ("g248", "g261")),
+          handout: HANDOUT_MODE,
+        )
+      ])
+    ],
+    [
+      #set align(right)
+      #uncover("2-")[Corona emits *high energy X-ray* spectrum]
+      #set text(size: 15pt)
+      #uncover("3-")[- Photons that hit the disc are *reprocessed*]
+      #uncover("5-")[- Reprocessed emission carries *reflection spectrum*]
+      #set align(center)
+      #uncover("5-", image("./figs/reflection-spectrum.svg", width: 90%))
+      #v(-20pt)
+      #uncover("7-", image("./figs/disc-projection.png", width: 80%))
+    ]
+
   )
 
 ]
 
 #slide(title: "The corona changes the emissivity of the disc")[
-  What the emissivity is, how it depends on geometry, the evidence that we have
-  for the steep emissivity profile (Fabian paper), that the LP is not favoured
-  by polarization measurements
+  #set text(size: 18pt)
+  Observe *steep emissivity profile* (e.g. Fabian et al., 2004)
+  - Phenomenologically described with a broken power law; can be well-fitted by the lamp post model (e.g. Wilkins & Fabian, 2012)
+  #grid(
+    columns: (45%, 1fr),
+    [
+        #v(2em)
+        #set align(center)
+        #animsvg(
+          read("./figs/corona-plot.svg"),
+          (i, im) => only(i)[
+            #image.decode(im, width: 80%)
+          ],
+          (hide: ("g114", "g115", "g116-3")),
+          (display: ("g116-3",)),
+          (display: ("g115",)),
+          (display: ("g114",)),
+          (),
+          handout: HANDOUT_MODE,
+        )
+    ],
+    [
+        #animsvg(
+          read("./figs/emissivity-and-time.svg"),
+          (i, im) => only(i)[
+            #image.decode(im, width: 100%)
+          ],
+          (hide: ("g370", "g371", "g372", "g373", "g374", "g375", "g227", "g312")),
+          (display: ("g372",)),
+          (display: ("g371",)),
+          (display: ("g370", "g369")),
+          (display: ("g373", "g374", "g375", "g227", "g312")),
+          handout: HANDOUT_MODE,
+        )
+    ],
+  )
+
+  // What the emissivity is, how it depends on geometry, the evidence that we have
+  // for the steep emissivity profile (Fabian paper), that the LP is not favoured
+  // by polarization measurements
 ]
 
 #slide(title: "Modelling efforts")[
