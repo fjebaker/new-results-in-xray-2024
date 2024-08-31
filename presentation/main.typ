@@ -50,7 +50,46 @@
 ]
 
 #slide(title: "An illustrative corona")[
-  Use an illustration of the corona to delineate all of the key trajectories (continuum, reflection, etc)
+  // Use an illustration of the corona to delineate all of the key trajectories (continuum, reflection, etc)
+
+  #grid(
+    columns: (58%, 1fr),
+    align(horizon, align(center)[
+      #v(2em)
+      #animsvg(
+        read("./figs/lamp-post.traces.svg"),
+        (i, im) => only(i)[
+          #image.decode(im, width: 100%)
+        ],
+        (hide:
+          ("g238", "g239", "g241", "g240",
+           // continuum
+           "g251",
+           // reflected
+           "g255", "g260",
+           // returning
+           "g249", "g259",
+           // reprocessed
+           "g250", "g256",
+           // continuum
+           "g248", "g261",
+           // eye
+           "g237",
+          ),
+        ),
+        (display: ("g238", "g239", "g241", "g240", "g256")),
+        (hide: ("g240", "g238")),
+        (hide: ("g241", "g239")),
+        (display: ("g250", "g249")),
+        (hide: ("g250",), display: ("g259",)),
+        (display: ("g237", "g255", "g260")),
+        (display: ("g248", "g261")),
+        handout: HANDOUT_MODE,
+      )
+    ]),
+    [Hello World]
+  )
+
 ]
 
 #slide(title: "The corona changes the emissivity of the disc")[
