@@ -47,6 +47,7 @@
 #slide(title: "A black hole and its crown")[
   Introduce the main players: the central singularity, the accretion disc, and the corona
   - some figure illustrating the various corona models
+  - an example iron line spectrum
 
   Cannot directly observe these systems apart from in 2 cases
 ]
@@ -153,41 +154,214 @@
     ],
   )
 
+  #grid(
+    columns: (45%, 1fr),
+    [
+      #v(1em)
+      Emissivities are sensitive to the *geometry of the corona*.
+      - The *reflection fraction* can be used to disambiguate similar emissivity profiles (Gonzalez et al., 2017).
+    ],
+    [
+      #text(fill: red)[TODO: figure showing what happens when the corona is extended. Use to motivate the problems with computing extended sources]
+    ]
+  )
   // What the emissivity is, how it depends on geometry, the evidence that we have
   // for the steep emissivity profile (Fabian paper), that the LP is not favoured
   // by polarization measurements
 ]
 
+
+#slide(title: "Extended models")[
+  // other models that people have created
+]
+
 #slide(title: "Modelling efforts")[
-  Problems associated with modelling extended coronae
-  - symmetries of the lamp post make it easier to exploit
-  - list some of the other methods that people have used
+  #set text(size: 20pt)
+  Focus on modelling *reflection spectra*:
+  #v(1em)
+  #align(center)[
+    #image("./figs/building-reflection-profiles.svg", width: 81%)
+  ]
+  #set text(size: 18pt)
+
+  #grid(
+    columns: (50%, 1fr),
+    column-gutter: 20pt,
+    [
+      Projection pre-computed using *Cunningham transfer functions* (Cunningham, 1975)
+      - Histogram binning becomes *two-dimensional integral* over the disc
+    ],
+    [
+      Works well for *lamp post* model thanks to *high degree of symmetry*
+      - Various short cuts for computing *emissivity* of point-sources
+    ]
+  )
+
+  #v(1em)
+
+  #align(center)[
+    Approach starts to break down for *extended coronae*
+  ]
+
+  #v(1em)
+
+  #cbox(fill: PRIMARY_COLOR, width: 100%, text(fill: SECONDARY_COLOR)[
+    Key challenge: *extended coronae* no longer on-axis symmetric
+    - Emissivity profile becomes *time dependent*: $epsilon(r) arrow.r epsilon(r, t)$
+    - No point-source short cuts: resort to *Monte Carlo* methods (too slow to fit to data)
+  ])
+
+  // Problems associated with modelling extended coronae
+  // - symmetries of the lamp post make it easier to exploit
+  // - list some of the other methods that people have used
 ]
 
 #slide(title: "Decomposing extended coronae")[
-  How we split an extended model into concentric annuli, and treat each
-  individually
+  #set text(size: 18pt)
+  #grid(
+    columns: (60%, 1fr),
+    [
+      #animsvg(
+        read("./figs/extended.traces-export.svg"),
+        (i, im) => only(i)[
+          #image.decode(im, width: 90%)
+        ],
+        (),
+        (hide: ("g126",), display: ("g142",)),
+        (display: ("g143", "g133")),
+        handout: HANDOUT_MODE,
+      )
+      #v(1.5em)
+      Sweep 2D plane on an axis to calculate the continuous arrival time $t_("corona" arrow.r "disc")$ for a *ring on the disc*
+    ],
+    [
+      #v(1em)
+      Split volume into *discs* of height $delta h$
+      - Each disc split into *annuli* $(x, x + delta x)$
+      - From *symmetry*, treat the annulus as an *off-axis point*
+      #align(center)[
+        #image("./figs/decomposition.svg", width: 80%)
+      ]
+      - Weight contribution of each annulus by its *volume* $tilde 2 pi x delta x delta h$
+    ]
+  )
+
+  #v(2em)
+
+  #cbox(fill: PRIMARY_COLOR, width: 100%, text(fill: SECONDARY_COLOR)[
+    Consequence of off-axis point is each *ring on the disc* has a *continuous, time-dependent emissivity*
+  ])
+
+  // How we split an extended model into concentric annuli, and treat each
+  // individually
 ]
 
 #slide(title: "Time dependent emissivity")[
-  How we deal with the time dependence
+  #set text(size: 18pt)
+  For a *single, off-axis point source*, calculate the *emissivity* $epsilon_i (r, t)$ for each annulus $i$:
+
+  #grid(
+    columns: (60%, 1fr),
+    [
+      #align(center)[
+        #image("./figs/time-dep-emissivity.png", width: 80%)
+      ]
+    ],
+    [
+      #v(2em)
+      Two separate annuli, one at $x = 3 r_"g"$ (green-pink), another at $x = 11 r_"g"$ (purple-orange).
+    ]
+  )
+
+  Combine (i.e. $plus.circle$) all $epsilon_i (r, t)$ to calculate *disc-like corona*:
+
+  #grid(
+    columns: (60%, 1fr),
+    [
+      #align(center)[
+        #image("./figs/time-dep-emissivity-disc.png", width: 80%)
+      ]
+    ],
+    [
+      #v(2em)
+      Combine all *emissivity functions* between $x = 0 r_"g"$ and $x = 11 r_"g"$.
+
+      #v(2em)
+
+      #cbox(fill: PRIMARY_COLOR, width: 100%, text(fill: SECONDARY_COLOR)[
+        Emissivity variations on the timescale on tens of $t_"g"$
+      ])
+    ]
+  )
+  // How we deal with the time dependence
 ]
 
 #slide(title: "Putting it back together")[
-  Reconstructing the full extended corona, how the emissivity function is used with Cunninham transfer functions, models that can be efficiently pre-computed and are fast enough to fit
-]
+  *Time-averaged* the emissivity and we can calculate *line profiles*:
+  #v(0.3em)
 
-#slide(title: "Illustrative results")[
-  Reconstructing the full extended corona, how the emissivity function is used with Cunninham transfer functions, models that can be efficiently pre-computed and are fast enough to fit
+
+  #grid(
+    columns: (65%, 1fr),
+    column-gutter: 20pt,
+    [
+      #align(center)[
+        #image("./figs/extended-line-profiles.svg", width: 100%)
+      ]
+    ],
+    [
+      #set align(horizon)
+      #cbox(fill: PRIMARY_COLOR, width: 100%, text(fill: SECONDARY_COLOR)[
+        Overall effect: *increases flux* contribution around $E \/ E_"0" = 1$
+      ])
+    ]
+  )
+
+  #set text(size: 18pt)
+  #grid(
+    columns: (1fr, 65%),
+    column-gutter: 20pt,
+    [
+      #set align(horizon)
+      Is effect degenerate with other parameters, e.g. *observer inclination* or *corona height*?
+
+      #v(1em)
+      #text(size: 15pt)[All figures to the right are for $x=20 r_"g"$]
+    ],
+    [
+      #align(center)[
+        #image("./figs/extended-line-profiles-changing.svg", width: 100%)
+      ]
+    ]
+  )
 ]
 
 #slide(title: "What about timing?")[
-  Reverberation results and the impact on lags
+  We developed a method using *time-dependent Cunningham transfer functions* for quickly computing timing features such as *reverberation lags*
+  - Approach takes calculations from $cal(O)(1" s")$ to $cal(O)(1" ms")$
+  // figures
+  // Reverberation results and the impact on lags
 ]
 
 #slide(title: "Next steps")[
-  Start modelling interplay between disc and corona (seed photons): propagating fluctuations and seed photons into the corona
+  #grid(
+    columns: (50%, 1fr),
+    [
+      We have models for how the *continuum spectrum* is distorted in an extended corona:
+    ]
+  )
+
+
+  Started fitting some of these models to data (in prep.)
+
+  Can model interplay between disc and corona (seed photons): propagating fluctuations and seed photons into the corona
   - modelling the blurred continuum spectrum
+
+  #v(1fr)
+  #cbox(fill: PRIMARY_COLOR, width: 100%, text(fill: SECONDARY_COLOR)[
+    Our main goal: provide the *tooling* to make these types of explorations *tractable*.
+  ])
+  #v(1em)
 ]
 
 #slide(title: "Thank you")[
