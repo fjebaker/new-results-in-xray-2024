@@ -487,7 +487,7 @@
       #v(0.5em)
       *Extended coronae* have *time-dependent* emissivity profiles
       - Timescale of variations on the order of 10s of $t_"g"$
-      - Disk-like coronae increase reflection spectral spectrum flux around $E\/E_0 = 1$
+      - Disk-like coronae increase reflection spectrum flux around $E\/E_0 = 1$
     ]
   ])
   ]
