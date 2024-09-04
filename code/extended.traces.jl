@@ -151,6 +151,6 @@ begin
     delay_times = 4.0 * times ./ maximum(times)
     plot_along_ring!(ax, rr, phis, delay_times; N = 100, zero = -model.h)
 
-    Makie.save("presentation/figs/_raw/extended.traces.pdf", fig)
+    Makie.save("presentation/figs/raw/extended.traces.pdf", fig)
     fig
 end
